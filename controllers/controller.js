@@ -35,9 +35,9 @@ router.get('/articles', function (req, res){
 router.get('/scrape', function(req, res) {
 
 //   request('https://www.mlb.com/news', function(error, response, html) {
-    request("http://www.echojs.com/", function(error, response, html) {
+    request("http://www.echojs.com/", function(error, response) {
 
-    var $ = cheerio.load(html);
+    var $ = cheerio.load(response.data);
 
     var titlesArray = [];
 
