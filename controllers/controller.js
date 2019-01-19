@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
 var request = require('request'); 
 var cheerio = require('cheerio'); 
 
 var Note = require('../models/Note.js');
 var Article = require('../models/Article.js');
+
 
 router.get('/', function (req, res){
 
@@ -16,9 +16,7 @@ router.get('/', function (req, res){
 router.get('/articles', function (req, res){
 
   Article.find().sort({_id: -1})
-
     .populate('notes')
-
     .exec(function(err, doc){
       if (err){
         console.log(err);
@@ -44,12 +42,9 @@ router.get('/scrape', function(req, res) {
     // $('article ').each(function(i, element) {
 
         // var result = {};
-
-        // result.title = $(this).children('.article-item__top').children(h1).text().trim() + ""; //convert to string for error handling later
-
+        // result.title = $(this).children('.article-item__top').children(h1).text().trim() + "";
         // result.link = $(this).children('.article-item__bottom').children('.article-item__more-container').children('.p-button article-item__more').children('a').attr('href').trim();
-
-        // result.summary = $(this).children('.article-item__bottom').children('.article-item__preview').children('p').text().trim() + ""; //convert to string for error handling later
+        // result.summary = $(this).children('.article-item__bottom').children('.article-item__preview').children('p').text().trim() + ""
         
         $("article h2").each(function(i, element) {
             var result = {};
@@ -100,7 +95,7 @@ router.post('/add/note/:id', function (req, res){
   var noteContent = req.body.comment;
   var result = {
     author: noteAuthor,
-    content: noteContent
+    body: noteContent
   };
 
   var entry = new Note (result);

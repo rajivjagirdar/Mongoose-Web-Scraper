@@ -1,40 +1,40 @@
     $(".button-collapse").sideNav();
   
-    $('.add-comment-button').on('click', function(){
+    $('.add-note-button').on('click', function(){
   
-      var articleId = req.params.id;
-  
-      var baseURL = window.location.origin;
+        var thisId = $(this).attr("data-id");
   
       $.ajax({
-        url: baseURL + '/add/comment/' + articleId,
+        url: '/add/note/' + thisId,
         type: 'POST',
         data: {
-            title: $("#author_name").val(),
+            author: $("#author_name").val(),
             body: $("#note_box").val()
           }
       })
       .done(function() {
-        location.reload();
+        
+        $("#notes").empty();
+
+        $("#titleinput").val("");
+        $("#bodyinput").val("");
       });
-      
+      res.redirect('/')
       return false;
-  
+      
     });
   
   
-    $('.delete-comment-button').on('click', function(){
+    $('.delete-note-button').on('click', function(){
   
-      var commentId = $(this).data("id");
-  
-      var baseURL = window.location.origin;
+      var commentId = $(this).attr("data-id");
   
       $.ajax({
-        url: baseURL + '/remove/comment/' + commentId,
+        url: '/remove/note/' + commentId,
         type: 'POST',
       })
       .done(function() {
-        location.reload();
+        res.redirect('/')
       });
       
       return false;
