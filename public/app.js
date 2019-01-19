@@ -1,5 +1,3 @@
-$(document).ready(function(){
-    
     $(".button-collapse").sideNav();
   
     $('.add-comment-button').on('click', function(){
@@ -15,7 +13,10 @@ $(document).ready(function(){
       $.ajax({
         url: baseURL + '/add/comment/' + articleId,
         type: 'POST',
-        data: frm.serialize(),
+        data: {
+            title: $("#author_name").val(),
+            body: $("#note_box").val()
+          }
       })
       .done(function() {
         location.reload();
@@ -44,4 +45,3 @@ $(document).ready(function(){
   
     });
     
-  });
