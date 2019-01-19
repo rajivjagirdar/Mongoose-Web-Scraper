@@ -35,9 +35,9 @@ router.get('/articles', function (req, res){
 router.get('/scrape', function(req, res) {
 
 //   request('https://www.mlb.com/news', function(error, response, html) {
-    request("http://www.echojs.com/", function(error, response) {
+    request("http://www.echojs.com/", function(error, response, html) {
 
-    var $ = cheerio.load(response.data);
+    var $ = cheerio.load(html);
 
     var titlesArray = [];
 
@@ -62,17 +62,11 @@ router.get('/scrape', function(req, res) {
               .attr("href");
 
         if(result.title !== "" &&  result.summary !== ""){
-
           if(titlesArray.indexOf(result.title) == -1){
-
             titlesArray.push(result.title);
-
             Article.count({ title: result.title}, function (err, test){
-
               if(test == 0){
-
                 var entry = new Article (result);
-
                 entry.save(function(err, doc) {
                   if (err) {
                     console.log(err);
@@ -81,40 +75,29 @@ router.get('/scrape', function(req, res) {
                     console.log(doc);
                   }
                 });
-
               }
               else{
                 console.log('Redundant Database Content. Not saved to DB.')
               }
-
             });
         }
         else{
           console.log('Redundant MLB Content. Not Saved to DB.')
         }
-
       }
       else{
         console.log('Empty Content. Not Saved to DB.')
       }
-
     });
-
     res.redirect("/articles");
-
   });
-
 });
-
 
 router.post('/add/note/:id', function (req, res){
 
   var articleId = req.params.id;
-  
   var noteAuthor = req.body.name;
-
   var noteContent = req.body.comment;
-
   var result = {
     author: noteAuthor,
     content: noteContent
@@ -131,20 +114,20 @@ router.post('/add/note/:id', function (req, res){
       .exec(function(err, doc){
         if (err){
           console.log(err);
-        } else {
+        } 
+        else {
           res.sendStatus(200);
         }
       });
     }
   });
-
 });
 
 router.post('/remove/note/:id', function (req, res){
 
   var noteId = req.params.id;
 
-  Note.findByIdAndRemove(commentId, function (err, todo) {  
+  Note.findByIdAndRemove(noteId, function (err, todo) {  
     
     if (err) {
       console.log(err);
@@ -152,9 +135,7 @@ router.post('/remove/note/:id', function (req, res){
     else {
       res.sendStatus(200);
     }
-
   });
-
 });
 
 

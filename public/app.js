@@ -2,7 +2,7 @@
   
     $('.add-comment-button').on('click', function(){
   
-      var articleId = $(this).data("id");
+      var articleId = req.params.id;
   
       var baseURL = window.location.origin;
   
