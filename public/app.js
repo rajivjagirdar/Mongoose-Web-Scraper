@@ -6,10 +6,6 @@
   
       var baseURL = window.location.origin;
   
-      var frmName = "form-add-" + articleId;
-      var frm = $('#' + frmName);
-  
-  
       $.ajax({
         url: baseURL + '/add/comment/' + articleId,
         type: 'POST',
