@@ -16,12 +16,10 @@ app.use(express.static(process.cwd() + '/public'));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-if(process.env.NODE_ENV == 'production'){
-  mongoose.connect('mongodb://heroku_58c6l923:2gecc0p46jq110h6lke7elc7vb@ds115214.mlab.com:15214/heroku_58c6l923');
-}
-else{
-  mongoose.connect('mongodb://localhost/WebScraper');
-}
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/WebScraper";
+
+mongoose.connect(MONGODB_URI);
+
 var db = mongoose.connection;
 
 db.on('error', function(err) {

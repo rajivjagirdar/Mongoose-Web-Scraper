@@ -21,7 +21,7 @@
       });
       $("#titleinput").val("");
         $("#bodyinput").val("");
-      res.redirect('/')      
+      res.redirect('/articles')      
     });
   
   
@@ -34,7 +34,7 @@
         type: 'POST',
       })
       .then(function() {
-        res.redirect('/')
+        res.redirect('/articles')
       });
       
       return false;
