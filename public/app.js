@@ -12,28 +12,28 @@
             body: $("#note_box").val()
           }
       })
-      .done(function() {
+      .then(function(data) {
+          console.log(data)
         
         $("#notes").empty();
 
-        $("#titleinput").val("");
-        $("#bodyinput").val("");
+        
       });
-      res.redirect('/')
-      return false;
-      
+      $("#titleinput").val("");
+        $("#bodyinput").val("");
+      res.redirect('/')      
     });
   
   
     $('.delete-note-button').on('click', function(){
   
-      var commentId = $(this).attr("data-id");
+      var noteId = $(this).attr("data-id");
   
       $.ajax({
-        url: '/remove/note/' + commentId,
+        url: '/remove/note/' + noteId,
         type: 'POST',
       })
-      .done(function() {
+      .then(function() {
         res.redirect('/')
       });
       

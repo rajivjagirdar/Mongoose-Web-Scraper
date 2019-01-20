@@ -1,19 +1,19 @@
 var express = require('express');
-var router = express.Router();
 var request = require('request'); 
 var cheerio = require('cheerio'); 
 
 var Note = require('../models/Note.js');
 var Article = require('../models/Article.js');
 
+var app = express();
 
-router.get('/', function (req, res){
+app.get('/', function (req, res){
 
   res.redirect('/scrape');
 
 });
 
-router.get('/articles', function (req, res){
+app.get('/articles', function (req, res){
 
   Article.find().sort({_id: -1})
     .populate('notes')
@@ -30,7 +30,7 @@ router.get('/articles', function (req, res){
 });
 
 
-router.get('/scrape', function(req, res) {
+app.get('/scrape', function(req, res) {
 
 //   request('https://www.mlb.com/news', function(error, response, html) {
     request("http://www.echojs.com/", function(error, response, html) {
@@ -88,7 +88,7 @@ router.get('/scrape', function(req, res) {
   });
 });
 
-router.post('/add/note/:id', function (req, res){
+app.post('/add/note/:id', function (req, res){
 
   var articleId = req.params.id;
   var noteAuthor = req.body.name;
@@ -118,20 +118,12 @@ router.post('/add/note/:id', function (req, res){
   });
 });
 
-router.post('/remove/note/:id', function (req, res){
+// app.post('/remove/note/:id', function (req, res){
 
-  var noteId = req.params.id;
+//   var noteId = req.params.id;
 
-  Note.findByIdAndRemove(noteId, function (err, todo) {  
-    
-    if (err) {
-      console.log(err);
-    } 
-    else {
-      res.sendStatus(200);
-    }
-  });
-});
+//   Note.findByIdAndRemove({'_id': noteId};
 
 
-module.exports = router;
+
+module.exports = app;
