@@ -1,7 +1,7 @@
 {
   "name": "mongoose-web-scraper",
   "version": "1.0.0",
-  "description": "",
+  "description": "Whenever a user visits the site, the app should scrape stories from a news outlet of your choice and display them for the user. Each scraped article should be saved to your application database.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,5 +26,6 @@
     "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
     "request": "^2.88.0"
-  }
+  },
+  "devDependencies": {}
 }
